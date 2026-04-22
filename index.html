@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Itinerary Planner</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="blob blob-top"></div>
+    <div class="blob blob-bottom"></div>
+
+    <div class="app" id="app">
+      <header class="header">
+        <p class="header-sub">Plan Your Journey</p>
+        <h1 class="header-title">Itinerary Planner</h1>
+        <div class="header-divider"></div>
+      </header>
+
+      <div class="progress-bar" id="progressBar">
+        <div class="progress-dot" id="dot1"></div>
+        <div class="progress-dot" id="dot2"></div>
+        <div class="progress-dot" id="dot3"></div>
+      </div>
+
+      <div class="card" id="mainCard">
+        <!-- STEP 1 -->
+        <section class="step" id="step1">
+          <span class="step-label">Step 1 of 3</span>
+          <h2 class="step-question">Where do you want to go?</h2>
+          <div class="choice-grid" id="destinationGrid">
+            <button class="choice-card" data-value="Beach">
+              <span class="alert-dot" id="alertBeach"></span>
+              <span class="choice-icon">🏖️</span>
+              <span class="choice-label">Beach</span>
+            </button>
+            <button class="choice-card" data-value="City">
+              <span class="alert-dot hidden" id="alertCity"></span>
+              <span class="choice-icon">🏙️</span>
+              <span class="choice-label">City</span>
+            </button>
+            <button class="choice-card" data-value="Nature">
+              <span class="alert-dot" id="alertNature"></span>
+              <span class="choice-icon">🌿</span>
+              <span class="choice-label">Nature</span>
+            </button>
+          </div>
+          <button class="btn-next" id="nextStep1" disabled>Continue →</button>
+        </section>
+
+        <!-- STEP 2 -->
+        <section class="step hidden" id="step2">
+          <span class="step-label">Step 2 of 3</span>
+          <h2 class="step-question">How many days?</h2>
+          <div class="choice-grid" id="daysGrid">
+            <button class="choice-card" data-value="1">
+              <span class="choice-icon">☀️</span>
+              <span class="choice-label">1 Day</span>
+              <span class="choice-sub">Quick Escape</span>
+            </button>
+            <button class="choice-card" data-value="2">
+              <span class="choice-icon">🌤️</span>
+              <span class="choice-label">2 Days</span>
+              <span class="choice-sub">Weekend Trip</span>
+            </button>
+            <button class="choice-card" data-value="3">
+              <span class="choice-icon">🌈</span>
+              <span class="choice-label">3 Days</span>
+              <span class="choice-sub">Extended Stay</span>
+            </button>
+          </div>
+          <div class="btn-row">
+            <button class="btn-back" id="backStep2">←</button>
+            <button class="btn-next flex1" id="nextStep2" disabled>
+              Continue →
+            </button>
+          </div>
+        </section>
+
+        <!-- STEP 3 -->
+        <section class="step hidden" id="step3">
+          <span class="step-label">Step 3 of 3</span>
+          <h2 class="step-question">What's your budget?</h2>
+          <div class="choice-grid" id="budgetGrid">
+            <button class="choice-card" data-value="Low">
+              <span class="choice-icon">💰</span>
+              <span class="choice-label">Low</span>
+              <span class="choice-sub">₱500–₱1,500/day</span>
+            </button>
+            <button class="choice-card" data-value="Medium">
+              <span class="choice-icon">💳</span>
+              <span class="choice-label">Medium</span>
+              <span class="choice-sub">₱2,000–₱5,000/day</span>
+            </button>
+            <button class="choice-card" data-value="High">
+              <span class="choice-icon">💎</span>
+              <span class="choice-label">High</span>
+              <span class="choice-sub">₱5,000+/day</span>
+            </button>
+          </div>
+          <div class="summary-box hidden" id="summaryBox"></div>
+          <div class="btn-row">
+            <button class="btn-back" id="backStep3">←</button>
+            <button class="btn-generate flex1" id="generateBtn" disabled>
+              Generate Itinerary ✨
+            </button>
+          </div>
+        </section>
+
+        <!-- STEP 4 -->
+        <section class="step hidden" id="step4">
+          <div class="result-header">
+            <div class="result-icon" id="resultIcon"></div>
+            <h2 class="result-title" id="resultTitle"></h2>
+            <p class="result-meta" id="resultMeta"></p>
+          </div>
+          <div class="itinerary-list" id="itineraryList"></div>
+          <div class="disaster-banner hidden" id="disasterBanner"></div>
+          <button class="btn-reset" id="resetBtn">← Plan Another Trip</button>
+        </section>
+
+        <!-- STEP 5 -->
+        <section class="step hidden" id="step5">
+          <div class="cancelled-screen">
+            <div class="cancelled-icon">🚨</div>
+            <h2 class="cancelled-title">Booking Cancelled</h2>
+            <p class="cancelled-msg">
+              Your safety is our priority. The booking has been cancelled due to
+              a disaster alert in your selected destination.<br /><br />
+              We recommend monitoring local advisories before rescheduling.
+            </p>
+            <button class="btn-generate" id="resetCancelBtn">
+              Plan a New Trip
+            </button>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- DISASTER MODAL -->
+    <div class="modal-overlay hidden" id="disasterModal">
+      <div class="modal-box">
+        <div class="modal-icon">⚠️</div>
+        <h3 class="modal-title">Disaster Alert</h3>
+        <p class="modal-msg" id="modalMsg"></p>
+        <p class="modal-sub">
+          Would you like to cancel your booking or proceed at your own risk?
+        </p>
+        <div class="modal-btns">
+          <button class="btn-cancel-booking" id="cancelBookingBtn">
+            Cancel Booking
+          </button>
+          <button class="btn-proceed" id="proceedBtn">Proceed Anyway</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

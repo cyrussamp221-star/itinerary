@@ -169,3 +169,12 @@ var ITINERARIES = {
 
 var DESTINATION_ICONS = { Beach: '🏖️', City: '🏙️', Nature: '🌿' };
 var BUDGET_ICONS = { Low: '💰', Medium: '💳', High: '💎' };
+
+if (typeof module !== 'undefined') {
+  module.exports = {
+    DISASTER_ALERTS,
+    ITINERARIES,
+    DESTINATION_ICONS,
+    BUDGET_ICONS,
+  };
+}
